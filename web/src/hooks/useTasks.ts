@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { browserMode, browserRequest } from "../api/browser";
 import { ApiRequestError, apiRequest } from "../api/client";
 import type { Task, Trace } from "../types";
+
+const request = browserMode ? browserRequest : apiRequest;
 
 const TRACE_LIMIT = 20;
 
@@ -27,7 +30,7 @@ export function useTasks() {
     setLoading(true);
     setLoadError(null);
     try {
-      const { data, trace } = await apiRequest<Task[]>("GET", "/api/tasks?all=true");
+      const { data, trace } = await request<Task[]>("GET", "/api/tasks?all=true");
       pushTrace(setTraces, trace);
       setTasks(data);
     } catch (err) {
@@ -59,7 +62,7 @@ export function useTasks() {
     try {
       const body: { title: string; due?: string } = { title };
       if (due) body.due = due;
-      const { data, trace } = await apiRequest<Task>("POST", "/api/tasks", body);
+      const { data, trace } = await request<Task>("POST", "/api/tasks", body);
       pushTrace(setTraces, trace);
       setTasks((prev) => (trimmed ? prev.map((task) => (task.id === tempId ? data : task)) : [...prev, data]));
     } catch (err) {
@@ -77,7 +80,7 @@ export function useTasks() {
     );
     setActionError(null);
     try {
-      const { data, trace } = await apiRequest<Task>("PATCH", `/api/tasks/${id}/done`);
+      const { data, trace } = await request<Task>("PATCH", `/api/tasks/${id}/done`);
       pushTrace(setTraces, trace);
       setTasks((prev) => prev.map((task) => (task.id === id ? data : task)));
     } catch (err) {
@@ -93,7 +96,7 @@ export function useTasks() {
     setTasks((prev) => prev.filter((task) => task.id !== id));
     setActionError(null);
     try {
-      const { trace } = await apiRequest<null>("DELETE", `/api/tasks/${id}`);
+      const { trace } = await request<null>("DELETE", `/api/tasks/${id}`);
       pushTrace(setTraces, trace);
     } catch (err) {
       setTasks(snapshot);
@@ -106,7 +109,7 @@ export function useTasks() {
   const ping = useCallback(async () => {
     setActionError(null);
     try {
-      const { trace } = await apiRequest<{ ok: boolean }>("GET", "/api/health");
+      const { trace } = await request<{ ok: boolean }>("GET", "/api/health");
       pushTrace(setTraces, trace);
     } catch (err) {
       if (err instanceof ApiRequestError) pushTrace(setTraces, err.trace);

@@ -2,4 +2,5 @@
 
 interface ImportMetaEnv {
   readonly VITE_API_ORIGIN?: string;
+  readonly VITE_API_MODE?: string;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { appPath, withBase } from "./path";
 import { Glossary } from "./pages/Glossary";
 import { Home } from "./pages/Home";
 import { Lessons } from "./pages/Lessons";
@@ -36,7 +37,7 @@ export function App() {
       <header className="border-b border-line">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-4 px-4 py-3 lg:px-6">
           <a
-            href="/"
+            href={withBase("/")}
             onClick={(event) => {
               event.preventDefault();
               go("/");
@@ -52,7 +53,7 @@ export function App() {
               return (
                 <a
                   key={link.href}
-                  href={link.href}
+                  href={withBase(link.href)}
                   aria-current={current ? "page" : undefined}
                   onClick={(event) => {
                     event.preventDefault();
@@ -97,14 +98,15 @@ function pageFor(path: string, dark: boolean) {
 }
 
 function usePath() {
-  const [path, setPath] = useState(() => window.location.pathname);
+  const [path, setPath] = useState(() => appPath());
   useEffect(() => {
-    const onPop = () => setPath(window.location.pathname);
+    const onPop = () => setPath(appPath());
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
   const go = (to: string) => {
-    if (window.location.pathname !== to) window.history.pushState({}, "", to);
+    const href = withBase(to);
+    if (window.location.pathname !== href) window.history.pushState({}, "", href);
     setPath(to);
   };
   return { path, go };

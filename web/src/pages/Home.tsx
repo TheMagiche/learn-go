@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { browserMode } from "../api/browser";
 import { AddTaskForm } from "../components/AddTaskForm";
 import { Filters, type Filter } from "../components/Filters";
 import { LearnPanel } from "../components/LearnPanel";
@@ -6,11 +7,17 @@ import { TaskList } from "../components/TaskList";
 import { isOverdue } from "../format";
 import { useTasks } from "../hooks/useTasks";
 
-const emptyCopy: Record<Filter, string> = {
-  pending: "Nothing pending. Add a task and the panel will show the POST and the Go that stored it.",
-  all: "The list is empty. The JSON file stays empty until the first save succeeds.",
-  overdue: "Nothing is past its due date.",
-};
+const emptyCopy: Record<Filter, string> = browserMode
+  ? {
+      pending: "Nothing pending. Add a task and the panel will show the POST and the Go handler that stores it.",
+      all: "The list is empty. It stays in this browser until the first task is saved.",
+      overdue: "Nothing is past its due date.",
+    }
+  : {
+      pending: "Nothing pending. Add a task and the panel will show the POST and the Go that stored it.",
+      all: "The list is empty. The JSON file stays empty until the first save succeeds.",
+      overdue: "Nothing is past its due date.",
+    };
 
 type Props = { dark: boolean };
 
@@ -39,8 +46,18 @@ export function Home({ dark }: Props) {
         <p className="font-mono text-xs tracking-wide text-teal uppercase">App</p>
         <h1 className="mt-1 font-serif text-4xl text-ink">Today’s list</h1>
         <p className="mt-2 max-w-xl text-muted">
-          The checkbox, the delete button, and the form each call the Go API. The same JSON file is what the{" "}
-          <span className="font-mono text-sm">todo</span> command reads.
+          {browserMode ? (
+            <>
+              This page keeps the list in your browser. Each click is answered the way the Go API would, and the panel
+              shows that handler. <span className="font-mono text-sm">make dev</span> is the copy that writes the JSON
+              file.
+            </>
+          ) : (
+            <>
+              The checkbox, the delete button, and the form each call the Go API. The same JSON file is what the{" "}
+              <span className="font-mono text-sm">todo</span> command reads.
+            </>
+          )}
         </p>
         <div className="mt-6 rounded-2xl border border-line bg-panel p-4">
           <AddTaskForm onAdd={add} error={actionError} />

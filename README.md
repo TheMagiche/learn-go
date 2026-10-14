@@ -6,6 +6,8 @@ The React app is a small todo list. Each add, complete, delete, and reload recor
 
 ![Two panes: the task list and the Go that handled the last click](docs/screenshot.svg)
 
+The UI is published at [themagiche.github.io/learn-go](https://themagiche.github.io/learn-go/). Tasks on that page stay in the browser. The learn panel still shows the Go handler each click would reach. `make dev` is the copy that talks to the API and the JSON file.
+
 ## Prerequisites
 
 - Go 1.22 or newer (`go version`)
@@ -129,6 +131,7 @@ internal/store                   Store interface and JSONFile
 internal/api                     HTTP handlers, middleware, tests
 internal/learn                   X-Go-Handler headers and the concept check
 web/                             Vite + React + TypeScript UI
+.github/workflows/pages.yml      builds the UI and publishes GitHub Pages
 scripts/gen-go-sources.go        copies Go functions into the UI
 ```
 
