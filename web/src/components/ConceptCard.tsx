@@ -13,8 +13,8 @@ export function ConceptCard({ concept, active, footer }: Props) {
       id={`concept-${concept.id}`}
       className={
         active
-          ? "scroll-mt-24 rounded-xl border border-teal bg-teal-ink p-4"
-          : "scroll-mt-24 rounded-xl border border-line bg-panel p-4"
+          ? "min-w-0 scroll-mt-24 rounded-xl border border-teal bg-teal-ink p-4"
+          : "min-w-0 scroll-mt-24 rounded-xl border border-line bg-panel p-4"
       }
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -23,7 +23,7 @@ export function ConceptCard({ concept, active, footer }: Props) {
       </div>
       <p className="mt-2 text-sm font-semibold text-ink">{concept.summary}</p>
       <p className="mt-2 text-sm leading-6 text-muted">{concept.explanation}</p>
-      <pre className="mt-3 overflow-x-auto rounded-lg bg-code p-3 font-mono text-xs leading-5 text-ink">
+      <pre className="mt-3 min-w-0 max-w-full overflow-x-auto rounded-lg bg-code p-3 font-mono text-xs leading-5 text-ink">
         <code>{concept.example}</code>
       </pre>
       <ul className="mt-3 flex flex-wrap gap-3 text-sm">

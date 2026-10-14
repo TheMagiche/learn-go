@@ -12,7 +12,7 @@ type Props = {
 export function GoCodeViewer({ handler, dark, activeConcept, onConcept }: Props) {
   const names = [handler, ...(relatedMethods[handler] ?? [])].filter((name, index, all) => all.indexOf(name) === index);
   return (
-    <div className="grid gap-4">
+    <div className="grid min-w-0 gap-4">
       <p className="text-sm text-muted">
         Highlighted lines are <span className="font-mono">LEARN</span> comments. Click one to open its card.
         {activeConcept ? <span className="text-teal"> Showing {activeConcept}.</span> : null}
@@ -34,15 +34,15 @@ function Snippet({ name, dark, onConcept }: { name: string; dark: boolean; onCon
     );
   }
   return (
-    <figure>
-      <figcaption className="mb-1 font-mono text-xs text-muted">
+    <figure className="m-0 min-w-0 max-w-full">
+      <figcaption className="mb-1 truncate font-mono text-xs text-muted">
         {source.file}:{source.startLine} · {name}
       </figcaption>
       <Highlight theme={dark ? themes.vsDark : themes.github} code={source.code} language="go">
         {({ style, tokens, getLineProps, getTokenProps }) => (
           <pre
             style={{ ...style, margin: 0 }}
-            className="overflow-x-auto rounded-lg border border-line p-2 text-[12.5px] leading-5"
+            className="min-w-0 max-w-full overflow-x-auto rounded-lg border border-line p-2 text-[12.5px] leading-5"
           >
             {tokens.map((line, index) => {
               const text = line.map((token) => token.content).join("");
@@ -52,7 +52,7 @@ function Snippet({ name, dark, onConcept }: { name: string; dark: boolean; onCon
                 <div
                   key={`${source.startLine + index}`}
                   {...lineProps}
-                  className={`${lineProps.className ?? ""} grid grid-cols-[2.75rem_minmax(0,1fr)] ${learn ? "cursor-pointer bg-teal-ink" : ""}`}
+                  className={`${lineProps.className ?? ""} grid w-fit min-w-full grid-cols-[2.75rem_minmax(0,1fr)] ${learn ? "cursor-pointer bg-teal-ink" : ""}`}
                   onClick={learn ? () => onConcept(learn[1]) : undefined}
                   onKeyDown={
                     learn
@@ -68,7 +68,7 @@ function Snippet({ name, dark, onConcept }: { name: string; dark: boolean; onCon
                   tabIndex={learn ? 0 : undefined}
                 >
                   <span className="pr-3 text-right text-muted select-none">{source.startLine + index}</span>
-                  <span>
+                  <span className="whitespace-pre">
                     {line.map((token, key) => (
                       <span key={key} {...getTokenProps({ token })} />
                     ))}

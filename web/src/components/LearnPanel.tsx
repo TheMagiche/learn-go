@@ -28,7 +28,7 @@ export function LearnPanel({ traces, dark, onClose }: Props) {
   const conceptIDs = selected ? conceptsFor(selected) : [];
 
   return (
-    <aside className="grid gap-5" aria-label="Go behind this click">
+    <aside className="grid min-w-0 gap-5" aria-label="Go behind this click">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-mono text-xs tracking-wide text-teal uppercase">Learn</p>
@@ -50,7 +50,7 @@ export function LearnPanel({ traces, dark, onClose }: Props) {
               document.getElementById(`concept-${id}`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
             }}
           />
-          <div className="grid gap-3">
+          <div className="grid min-w-0 gap-3">
             {conceptIDs.map((id) => {
               const concept = conceptById[id];
               if (!concept) return null;
@@ -64,7 +64,7 @@ export function LearnPanel({ traces, dark, onClose }: Props) {
           handled it.
         </p>
       )}
-      <div>
+      <div className="min-w-0">
         <h3 className="mb-2 font-mono text-xs tracking-wide text-muted uppercase">Earlier requests</h3>
         {traces.length === 0 ? (
           <p className="text-sm text-muted">No requests yet.</p>
@@ -73,7 +73,7 @@ export function LearnPanel({ traces, dark, onClose }: Props) {
             {traces.map((trace) => {
               const current = trace.id === selected?.id;
               return (
-                <li key={trace.id}>
+                <li key={trace.id} className="min-w-0">
                   <button
                     type="button"
                     onClick={() => setSelectedId(trace.id)}
@@ -83,10 +83,10 @@ export function LearnPanel({ traces, dark, onClose }: Props) {
                         : "flex w-full items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-left font-mono text-xs text-muted hover:bg-code"
                     }
                   >
-                    <span>
+                    <span className="truncate">
                       {trace.method} {trace.url}
                     </span>
-                    <span>{trace.status}</span>
+                    <span className="shrink-0">{trace.status}</span>
                   </button>
                 </li>
               );

@@ -9,7 +9,7 @@ export function RequestInspector({ trace }: Props) {
   const curl = curlCommand(trace);
   const cli = cliCommand(trace);
   return (
-    <div className="grid gap-3">
+    <div className="grid min-w-0 gap-3">
       <div className="flex flex-wrap items-center gap-2">
         <span className={`rounded-full px-2 py-0.5 font-mono text-xs font-semibold ${methodClass(trace.method)}`}>
           {trace.method}
@@ -28,9 +28,9 @@ export function RequestInspector({ trace }: Props) {
 
 function Body({ label, text }: { label: string; text: string }) {
   return (
-    <div>
+    <div className="min-w-0">
       <h3 className="mb-1 font-mono text-xs tracking-wide text-muted uppercase">{label}</h3>
-      <pre className="overflow-x-auto rounded-lg bg-code p-3 font-mono text-xs leading-5">{text}</pre>
+      <pre className="min-w-0 max-w-full overflow-x-auto rounded-lg bg-code p-3 font-mono text-xs leading-5">{text}</pre>
     </div>
   );
 }
@@ -38,7 +38,7 @@ function Body({ label, text }: { label: string; text: string }) {
 function CopyBlock({ label, text }: { label: string; text: string }) {
   const [copied, setCopied] = useState(false);
   return (
-    <div>
+    <div className="min-w-0">
       <div className="mb-1 flex items-center justify-between gap-2">
         <h3 className="font-mono text-xs tracking-wide text-muted uppercase">{label}</h3>
         <button
@@ -54,7 +54,7 @@ function CopyBlock({ label, text }: { label: string; text: string }) {
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className="overflow-x-auto rounded-lg bg-code p-3 font-mono text-xs leading-5">{text}</pre>
+      <pre className="min-w-0 max-w-full overflow-x-auto rounded-lg bg-code p-3 font-mono text-xs leading-5">{text}</pre>
     </div>
   );
 }

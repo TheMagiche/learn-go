@@ -90,8 +90,8 @@ export function Home({ dark }: Props) {
         </div>
       </section>
       {open ? (
-        <div className="fixed inset-0 z-20 overflow-auto bg-paper p-4 lg:static lg:z-auto lg:overflow-visible lg:bg-transparent lg:p-0">
-          <div className="rounded-2xl border border-line bg-panel p-4 lg:sticky lg:top-4">
+        <div className="fixed inset-0 z-20 min-w-0 overflow-auto bg-paper p-4 lg:static lg:z-auto lg:overflow-visible lg:bg-transparent lg:p-0">
+          <div className="min-w-0 rounded-2xl border border-line bg-panel p-4 lg:sticky lg:top-4">
             <LearnPanel traces={traces} dark={dark} onClose={() => setOpen(false)} />
           </div>
         </div>
