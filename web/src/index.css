@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #f3eee4;
+  --panel: #fffaf3;
+  --ink: #1c1915;
+  --muted: #6d655c;
+  --line: #e3d9c8;
+  --teal: #0e6b66;
+  --teal-ink: #e5f4f2;
+  --clay: #b64028;
+  --good: #1d7a46;
+  --bad: #a3262d;
+  --warn: #8a5a12;
+  --code: #f7f1e6;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #121418;
+  --panel: #1b1e24;
+  --ink: #f4efe6;
+  --muted: #b1a89d;
+  --line: #31363f;
+  --teal: #5ee0d6;
+  --teal-ink: #14302e;
+  --clay: #f0a08a;
+  --good: #8fd6b0;
+  --bad: #f3b4b4;
+  --warn: #e6c98a;
+  --code: #15181e;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --font-serif: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --color-paper: var(--bg);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-teal: var(--teal);
+  --color-teal-ink: var(--teal-ink);
+  --color-clay: var(--clay);
+  --color-good: var(--good);
+  --color-bad: var(--bad);
+  --color-warn: var(--warn);
+  --color-code: var(--code);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--teal) 28%, transparent);
+}
